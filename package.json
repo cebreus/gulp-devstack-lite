@@ -1,0 +1,152 @@
+{
+  "name": "gulp-devstack-light",
+  "version": "1.0.0",
+  "description": "Lightweight clone of the Front-end Gulp DevStack",
+  "scripts": {
+    "build": "node ./node_modules/gulp/bin/gulp.js -f gulpfile-build.js default",
+    "build:validate:html": "node ./node_modules/gulp/bin/gulp.js -f gulpfile-build.js validate",
+    "dev": "node ./node_modules/gulp/bin/gulp.js -f gulpfile.js default",
+    "deploy-ftp": "node ./node_modules/gulp/bin/gulp.js -f gulpfile-build.js deployFtp",
+    "export": "node ./node_modules/gulp/bin/gulp.js -f gulpfile-export.js default",
+    "export:validate:html": "node ./node_modules/gulp/bin/gulp.js -f gulpfile-export.js validate",
+    "commit": "git-cz",
+    "format": "prettier --write **/*.{css,scss,md,js,jsx,ts,tsx,json} && npm run js:fix && npm run css:fix && npm run text:fix",
+    "css:lint": "node ./node_modules/stylelint/bin/stylelint.js **/*.scss",
+    "css:fix": "node ./node_modules/stylelint/bin/stylelint.js --fix **/*.scss",
+    "css:unused": "node ./node_modules/stylelint-find-rules/src/bin/stylelint-find-rules.js",
+    "js:lint": "node ./node_modules/eslint/bin/eslint.js '**/*.js'",
+    "js:fix": "node ./node_modules/eslint/bin/eslint.js --fix '**/*.js'",
+    "text:lint": "node ./node_modules/remark-cli/cli.js -q .",
+    "text:fix": "node ./node_modules/remark-cli/cli -q . -o --",
+    "release": "release-it",
+    "version": "node ./node_modules/auto-changelog/src/index.js -p -t keepachangelog.hbs && npm run text:fix && git add CHANGELOG.md",
+    "todo": "./todo.sh",
+    "todo:show": "leasot -x -r markdown -A '.txt,coffeeParser' './**/*.{js,html,njk,scss,txt,md,yml}' -i './node_modules/**/*'"
+  },
+  "dependencies": {
+    "bootstrap": "4.6.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.13.12",
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
+    "@release-it/conventional-changelog": "^2.0.1",
+    "@visionappscz/stylelint-config-visionapps": "^1.1.0",
+    "@visionappscz/stylelint-config-visionapps-order": "^1.1.0",
+    "auto-changelog": "^2.2.1",
+    "autoprefixer": "^9.8.6",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.14",
+    "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-brotli": "^3.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-data": "^1.3.1",
+    "gulp-favicons": "^3.0.0",
+    "gulp-google-webfonts": "^4.0.0",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-html-validate": "^0.2.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-if": "^3.0.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-inject": "^5.0.5",
+    "gulp-jsbeautifier": "^3.0.1",
+    "gulp-markdown-to-json": "^1.1.0",
+    "gulp-merge-json": "^2.1.1",
+    "gulp-newer": "^1.4.0",
+    "gulp-nunjucks-render": "^2.2.3",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-purgecss": "^4.0.3",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-all": "^2.0.3",
+    "gulp-rev-delete-original": "^0.2.3",
+    "gulp-rev-replace": "^0.4.4",
+    "gulp-rev-rewrite": "^4.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-sri-hash": "^2.2.1",
+    "gulp-stylelint": "^13.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-upng": "^1.0.3",
+    "html-validate": "^4.8.0",
+    "husky": "^5.2.0",
+    "imagemin-mozjpeg": "^9.0.0",
+    "leasot": "^11.5.0",
+    "lint-staged": "^10.5.4",
+    "marked": "^2.0.1",
+    "nunjucks-date-filter-locale": "^1.4.3",
+    "nunjucks-markdown-filter": "^0.1.0",
+    "postcss": "^7.0.35",
+    "postcss-flexbugs-fixes": "^4.2.1",
+    "postcss-scss": "^3.0.5",
+    "prettier": "^2.2.1",
+    "release-it": "^14.5.0",
+    "remark": "^13.0.0",
+    "remark-cli": "^9.0.0",
+    "remark-frontmatter": "^3.0.0",
+    "remark-lint-match-punctuation": "^0.2.1",
+    "remark-preset-lint-consistent": "^4.0.0",
+    "remark-preset-lint-recommended": "^5.0.0",
+    "stylelint": "^13.12.0",
+    "stylelint-find-rules": "^2.2.0",
+    "stylelint-high-performance-animation": "^1.5.2",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.19.0",
+    "stylelint-selector-bem-pattern": "^2.1.0",
+    "vinyl-ftp": "^0.6.1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "repository": "https://github.com/cebreus/gulp-devstack",
+  "homepage": "https://github.com/cebreus/gulp-devstack#readme",
+  "bugs": {
+    "url": "https://github.com/cebreus/gulp-devstack/issues",
+    "email": "cebreus@live.com"
+  },
+  "author": "Jaroslav Vrána <cebreus@live.com>",
+  "private": false,
+  "license": "MIT",
+  "keywords": [
+    "devstack",
+    "gulp",
+    "bootstrap"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "npx lint-staged --allow-empty && npm run todo"
+    }
+  },
+  "lint-staged": {
+    "*.{css,scss,md,js,jsx,ts,tsx,json}": [
+      "prettier --write"
+    ],
+    "*.js": [
+      "eslint --cache --fix"
+    ],
+    "*.md": [
+      "npm run text:fix"
+    ],
+    "*.scss": [
+      "stylelint --fix"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

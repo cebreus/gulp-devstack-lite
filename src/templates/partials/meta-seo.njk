@@ -1,0 +1,22 @@
+{% if pageData.seo.robots is defined and pageData.seo.robots | length > 0 %}
+	<meta name="robots" content="{{ pageData.seo.robots }}">
+{% else %}
+	<meta name="robots" content="noindex,nofollow">
+{% endif %}
+
+{% if pageData.seo.canonical is defined and seo.canonical | length > 0 %}
+	<link rel="canonical" href="{{ baseurl|trim }}{{ canonical|trim }}">
+{% endif %}
+
+{% if (pageData.seo.title is defined and pageData.seo.title | length > 0) 
+	or(pageData.title_h1 is defined and pageData.title_h1 | length > 0) %}
+	<title>{{ (pageData.seo.title or pageData.title_h1)|striptags|trim }}</title>
+{% else %}
+	<script>
+		console.err('Missing `seo.title` or `title`');
+	</script>
+{% endif %}
+
+{% if (pageData.seo.description is defined and pageData.seo.description | length > 0) %}
+	<meta name="description" content="{{ (pageData.seo.description)|striptags|trim }}">
+{% endif %}

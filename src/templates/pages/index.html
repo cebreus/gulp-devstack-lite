@@ -1,0 +1,27 @@
+{% extends "./layout-default.html" %}
+
+{% set pageData = {
+  page_id: 'home',
+  template: 'index',
+  lang: 'cs',
+  title_h1: '𝑃𝑎𝑔𝑒 Main Heading',
+  seo: {
+    title: '𝑃𝑎𝑔𝑒 SEO Title',
+    description: '𝑃𝑎𝑔𝑒 SEO Description',
+    robots: '',
+    canonical: ''
+  }
+} %}
+
+{% block content %}
+
+  <article class="o-main py-5" role="main">
+    <div class="container">
+
+      <h1 class="mb-4">{{ title_h1 | safe }}</h1>
+      <div class="lead mb-3">+++</div>
+
+    </div>
+  </article>
+
+{% endblock %}

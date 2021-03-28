@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ pageData.lang }}">
+	<head>
+		<meta charset="{{ charset }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		{% include "./partials/meta-seo.njk" %}
+		{% include "./partials/favicons.njk" %}
+
+		<!-- inject:css -->
+		<!-- endinject -->
+	</head>
+	<body data-version="0.0.0" data-template="{{ pageData.template }}">
+
+		{% block content %}{% endblock %}
+
+		<!-- inject: bootstrap js -->
+		<!-- inject:js -->
+		<!-- endinject -->
+	</body>
+</html>
