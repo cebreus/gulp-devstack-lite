@@ -49,12 +49,6 @@ const tplBuild = buildBase;
 const tplPagesBase = `${tplBase}/pages`;
 const tplTemplatesBase = `${tplBase}`;
 
-// Datasets from Markdown to JSON
-// ----------------
-
-const datasetPagesSource = `${contentBase}/pages/**/*.md`;
-const datasetPagesBuild = `${tempBase}/_dataset-pages`;
-
 // GFX
 // --------------
 
@@ -95,8 +89,6 @@ const fontLoadConfig = {
 module.exports = {
   buildBase,
   contentBase,
-  datasetPagesBuild,
-  datasetPagesSource,
   devBase,
   fontLoadConfig,
   fontloadFile,

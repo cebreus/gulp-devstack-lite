@@ -6,10 +6,10 @@ const cleanFnc = require('./gulp-tasks/gulp-clean');
 const copyStaticFnc = require('./gulp-tasks/gulp-copy-static');
 const cssCompileFnc = require('./gulp-tasks-export/gulp-compile-sass');
 const cssPurgeFnc = require('./gulp-tasks-build/gulp-purgecss');
-const datasetPrepareFnc = require('./gulp-tasks/gulp-dataset-prepare');
 const faviconsFnc = require('./gulp-tasks/gulp-favicons');
 const fontLoadFnc = require('./gulp-tasks/gulp-font-load');
 const htmlBuildFnc = require('./gulp-tasks-export/gulp-html-build');
+const htmlPrettifyFnc = require('./gulp-tasks/gulp-html-prettify');
 const htmlValidateFnc = require('./gulp-tasks/gulp-html-validate');
 const imagesOptimizeFnc = require('./gulp-tasks/gulp-optimize-images');
 const jsProcessFnc = require('./gulp-tasks-export/gulp-process-js');
@@ -81,28 +81,6 @@ function processJs() {
   });
 }
 
-// Dataset
-
-function datasetPrepareSite(done) {
-  sleep().then(() => {
-    datasetPrepareFnc(`${config.contentBase}/site.md`, config.tempBase, () => {
-      done();
-    });
-  });
-}
-
-function datasetPreparePages(done) {
-  sleep().then(() => {
-    datasetPrepareFnc(
-      config.datasetPagesSource,
-      config.datasetPagesBuild,
-      () => {
-        done();
-      }
-    );
-  });
-}
-
 // Templates
 
 function buildPages(done) {
@@ -111,8 +89,6 @@ function buildPages(done) {
     output: config.tplBuild,
     templates: config.tplTemplatesBase,
     processPaths: [config.tplPagesBase, config.tplTemplatesBase],
-    siteConfig: `${config.tempBase}/site.json`,
-    dataSource: config.datasetPagesBuild,
     injectCdnJs: config.injectCdnJs,
     injectJs: config.injectJs,
     injectCss: config.injectCss,
@@ -124,6 +100,20 @@ function buildPages(done) {
 
   sleep().then(() => {
     htmlBuildFnc(params);
+  });
+}
+
+function prettifyPages(done) {
+  const params = {
+    input: `${config.tplBuild}/**/*.html`,
+    output: config.tplBuild,
+    cb: () => {
+      done();
+    },
+  };
+
+  sleep().then(() => {
+    htmlPrettifyFnc(params);
   });
 }
 
@@ -259,12 +249,7 @@ gulp.task('css', compileSassAll);
 
 gulp.task('js', processJs);
 
-gulp.task('dataset', gulp.parallel(datasetPrepareSite, datasetPreparePages));
-
-gulp.task(
-  'html',
-  gulp.series(datasetPrepareSite, datasetPreparePages, buildPages)
-);
+gulp.task('html', buildPages);
 
 gulp.task('images', images);
 
@@ -277,16 +262,15 @@ gulp.task(
   gulp.series(
     cleanFolders,
     copyStatic,
-    datasetPrepareSite,
-    datasetPreparePages,
-    // favicons,
-    // fontLoad,
+    favicons,
+    fontLoad,
     compileSassAll,
-    // processJs,
+    processJs,
     buildPages,
-    // purgecss,
-    // revision,
-    // replaceHash,
+    purgecss,
+    revision,
+    replaceHash,
+    prettifyPages,
     images,
     cleanFolderTemp
   )

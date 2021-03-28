@@ -20,7 +20,7 @@ const sassAll = [
   `!${sassBase}/_*.scss`,
   `!${sassBase}/u-*.scss`,
 ];
-const injectCss = `${sassBuild}/custom.css`;
+const injectCss = `${sassBuild}/index.min.css`;
 
 // JavaScript
 // --------------
@@ -117,17 +117,11 @@ const faviconGenConfig = {
   },
 };
 
-// Files that need to be removed
-// --------------
-
-const buildRevManifest = `${tempBase}/rev-manifest.json`;
-
 // Exports
 // --------------
 
 module.exports = {
   buildBase,
-  buildRevManifest,
   contentBase,
   datasetPagesBuild,
   datasetPagesSource,

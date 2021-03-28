@@ -6,7 +6,6 @@ const cleanFnc = require('./gulp-tasks/gulp-clean');
 const copyStaticFnc = require('./gulp-tasks/gulp-copy-static');
 const cssCompileFnc = require('./gulp-tasks-build/gulp-compile-sass');
 const cssPurgeFnc = require('./gulp-tasks-build/gulp-purgecss');
-const datasetPrepareFnc = require('./gulp-tasks/gulp-dataset-prepare');
 const deployFtpFnc = require('./gulp-tasks/gulp-deploy-ftp');
 const faviconsFnc = require('./gulp-tasks/gulp-favicons');
 const fontLoadFnc = require('./gulp-tasks/gulp-font-load');
@@ -95,28 +94,6 @@ function processJs() {
   });
 }
 
-// Dataset
-
-function datasetPrepareSite(done) {
-  sleep().then(() => {
-    datasetPrepareFnc(`${config.contentBase}/site.md`, config.tempBase, () => {
-      done();
-    });
-  });
-}
-
-function datasetPreparePages(done) {
-  sleep().then(() => {
-    datasetPrepareFnc(
-      config.datasetPagesSource,
-      config.datasetPagesBuild,
-      () => {
-        done();
-      }
-    );
-  });
-}
-
 // Templates
 
 function buildPages(done) {
@@ -125,8 +102,6 @@ function buildPages(done) {
     output: config.tplBuild,
     templates: config.tplTemplatesBase,
     processPaths: [config.tplPagesBase, config.tplTemplatesBase],
-    siteConfig: `${config.tempBase}/site.json`,
-    dataSource: config.datasetPagesBuild,
     injectCdnJs: config.injectCdnJs,
     injectJs: config.injectJs,
     injectCss: config.injectCss,
@@ -273,12 +248,7 @@ gulp.task('css', compileSassAll);
 
 gulp.task('js', processJs);
 
-gulp.task('dataset', gulp.parallel(datasetPrepareSite, datasetPreparePages));
-
-gulp.task(
-  'html',
-  gulp.series(datasetPrepareSite, datasetPreparePages, buildPages)
-);
+gulp.task('html', buildPages);
 
 gulp.task('images', images);
 
@@ -291,8 +261,6 @@ gulp.task(
   gulp.series(
     cleanFolders,
     copyStatic,
-    datasetPrepareSite,
-    datasetPreparePages,
     favicons,
     fontLoad,
     compileSassAll,

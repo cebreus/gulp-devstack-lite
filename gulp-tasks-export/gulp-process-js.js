@@ -1,8 +1,8 @@
+const babel = require('gulp-babel');
 const fs = require('fs');
 const gulp = require('gulp');
-const gulpif = require('gulp-if');
-const babel = require('gulp-babel');
 const gulpConcat = require('gulp-concat');
+const gulpif = require('gulp-if');
 const plumber = require('gulp-plumber');
 const prettify = require('gulp-jsbeautifier');
 

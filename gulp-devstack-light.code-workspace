@@ -76,6 +76,23 @@
       "background",
       "data-.*",
       "aria-.*"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+      "activityBar.activeBackground": "#dce3ed",
+      "activityBar.activeBorder": "#be819a",
+      "activityBar.background": "#dce3ed",
+      "activityBar.foreground": "#15202b",
+      "activityBar.inactiveForeground": "#15202b99",
+      "activityBarBadge.background": "#be819a",
+      "activityBarBadge.foreground": "#15202b",
+      "statusBar.background": "#bac8dc",
+      "statusBar.foreground": "#15202b",
+      "statusBarItem.hoverBackground": "#98adcb",
+      "titleBar.activeBackground": "#bac8dc",
+      "titleBar.activeForeground": "#15202b",
+      "titleBar.inactiveBackground": "#bac8dc99",
+      "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#bac8dc"
   }
 }

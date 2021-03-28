@@ -5,13 +5,11 @@ const path = require('path');
 const cleanFnc = require('./gulp-tasks/gulp-clean');
 const copyStaticFnc = require('./gulp-tasks/gulp-copy-static');
 const cssCompileFnc = require('./gulp-tasks/gulp-compile-sass');
-const datasetBuildFnc = require('./gulp-tasks/gulp-dataset-build');
-const datasetPrepareFnc = require('./gulp-tasks/gulp-dataset-prepare');
 const fontLoadFnc = require('./gulp-tasks/gulp-font-load');
 const hotReload = require('./gulp-tasks/gulp-hotreload');
 const htmlBuildFnc = require('./gulp-tasks/gulp-html-build');
 const imagesOptimizeFnc = require('./gulp-tasks/gulp-optimize-images');
-const jsProcessFnc = require('./gulp-tasks/gulp-concat-files');
+const jsProcessFnc = require('./gulp-tasks-export/gulp-process-js');
 
 // Variables
 // --------------
@@ -62,33 +60,11 @@ function compileSassUtils() {
 
 // JS
 
-function concatJs() {
-  return jsProcessFnc(config.jsFiles, config.jsBuild, 'app.js');
-}
-
-// Dataset
-
-function datasetPrepareSite(done) {
-  datasetPrepareFnc(`${config.contentBase}/site.md`, config.tempBase, () => {
-    done();
+function processJs() {
+  return jsProcessFnc(config.jsFiles, config.jsBuild, {
+    concatFiles: true,
+    outputConcatPrefixFileName: 'app',
   });
-}
-
-function datasetPreparePages(done) {
-  datasetPrepareFnc(config.datasetPagesSource, config.datasetPagesBuild, () => {
-    done();
-  });
-}
-
-function datasetBuild(done) {
-  datasetBuildFnc(
-    [`${config.tempBase}/site.json`, `${config.datasetPagesBuild}/*.json`],
-    config.tempBase,
-    '_dataset-site',
-    () => {
-      done();
-    }
-  );
 }
 
 // Templates
@@ -99,8 +75,6 @@ function buildPages(done) {
     output: config.tplBuild,
     templates: config.tplTemplatesBase,
     processPaths: [config.tplPagesBase, config.tplTemplatesBase],
-    siteConfig: `${config.tempBase}/site.json`,
-    dataSource: config.datasetPagesBuild,
     injectCdnJs: config.injectCdnJs,
     injectJs: config.injectJs,
     injectCss: config.injectCss,
@@ -165,21 +139,13 @@ function watchFiles() {
 
   gulp.watch(
     config.jsFiles,
-    gulp.series(concatJs, hotReload.browserSyncRefresh)
+    gulp.series(processJs, hotReload.browserSyncRefresh)
   );
 
   // Watch Templates
 
   gulp
     .watch(['./src/templates/**/*.*', './src/pages/**/*.*'], buildPages)
-    .on('change', hotReload.browserSyncReload);
-
-  // Watch Datasets
-  gulp
-    .watch(
-      './content/**/*.md',
-      gulp.series(datasetPrepareSite, datasetPreparePages, buildPages)
-    )
     .on('change', hotReload.browserSyncReload);
 
   // Watch GFX
@@ -195,14 +161,9 @@ gulp.task(
   gulp.parallel(compileSassCore, compileSassCustom, compileSassUtils)
 );
 
-gulp.task('js', concatJs);
+gulp.task('js', processJs);
 
-gulp.task('dataset', gulp.parallel(datasetPrepareSite, datasetPreparePages));
-
-gulp.task(
-  'html',
-  gulp.series(datasetPrepareSite, datasetPreparePages, buildPages)
-);
+gulp.task('html', gulp.series(buildPages));
 
 gulp.task('images', images);
 
@@ -213,14 +174,11 @@ gulp.task(
   gulp.series(
     cleanFolders,
     copyStatic,
-    datasetPrepareSite,
-    datasetPreparePages,
-    datasetBuild,
     fontLoad,
     compileSassCore,
     compileSassCustom,
     compileSassUtils,
-    concatJs,
+    processJs,
     buildPages,
     images,
     gulp.parallel(watchFiles, hotReload.browserSync)
