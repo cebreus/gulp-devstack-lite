@@ -24,7 +24,7 @@
     "todo:show": "leasot -x -r markdown -A '.txt,coffeeParser' './**/*.{js,html,njk,scss,txt,md,yml}' -i './node_modules/**/*'"
   },
   "dependencies": {
-    "bootstrap": "4.5.3"
+    "bootstrap": "4.6.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.13.12",
