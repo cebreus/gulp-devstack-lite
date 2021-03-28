@@ -1,5 +1,4 @@
 const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
 const flexbugsFixes = require('postcss-flexbugs-fixes');
 
 // Paths
@@ -73,7 +72,6 @@ const postcssPluginsBase = [
   autoprefixer({
     grid: true,
   }),
-  cssnano(),
 ];
 
 const fontloadFile = `${devBase}/fonts.list`;

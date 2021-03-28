@@ -6,6 +6,7 @@ const cleanFnc = require('./gulp-tasks/gulp-clean');
 const copyStaticFnc = require('./gulp-tasks/gulp-copy-static');
 const cssCompileFnc = require('./gulp-tasks-export/gulp-compile-sass');
 const cssPurgeFnc = require('./gulp-tasks-build/gulp-purgecss');
+const cssTidyFnc = require('./gulp-tasks-export/gulp-postcss-cleanup');
 const faviconsFnc = require('./gulp-tasks/gulp-favicons');
 const fontLoadFnc = require('./gulp-tasks/gulp-font-load');
 const htmlBuildFnc = require('./gulp-tasks-export/gulp-html-build');
@@ -70,6 +71,10 @@ function purgecss(done) {
       }
     );
   });
+}
+
+function clancss() {
+  return cssTidyFnc(`${config.sassBuild}/*.css`, `${config.sassBuild}`);
 }
 
 // JS
@@ -268,6 +273,7 @@ gulp.task(
     processJs,
     buildPages,
     purgecss,
+    clancss,
     revision,
     replaceHash,
     prettifyPages,
