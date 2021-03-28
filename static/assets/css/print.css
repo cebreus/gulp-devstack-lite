@@ -1,0 +1,137 @@
+@page {
+    size: auto;
+    margin: 10mm;
+}
+
+#mask-foot-desc,
+#mask-top,
+#mask-left {
+    display: none;
+}
+body > div.print {
+    margin-left: auto;
+    margin-right: auto;
+    width: 980px;
+}
+body > div.print > div {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+body > div.print > div.smaller {
+    width: 67%;
+}
+#mask-content {
+    border-bottom: none; background: #fff;
+}
+#bflm {
+    background: red;
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 90%; background-color: #fff;
+}
+/*tabulka format na vysku*/
+.print-table,
+.print-table-wide {
+    width: 100%;
+}
+
+/*doplnkova mala tabulka na sirku*/
+.print-table-small {
+    width: 300px;
+    float: right;
+}
+/*defaultni nastaveni tabulek*/
+.print table {
+    margin-bottom: 0.5em; border-collapse: collapse; border: 2px solid #000; border-top: 0;
+}
+.print th {
+    padding: 0.2em 5px 0.2em 5px; border: 1px solid #000; border-top: 2px solid #000; border-bottom: 2px solid #000; font-size: 70%; font-weight: bold; text-align: left; background: #CCCCCC;
+}
+/*
+th {
+    background: #def7f7;
+}
+*/
+.print td {
+    padding: 0.2em 5px 0.2em 5px; border: 1px solid #000; font-size: 70%; text-align: left; background: #fff;
+}
+.print td.highlight {
+    background: #CCCCCC;
+}
+.print h3 {
+    margin: 0; margin: 0.2em 0 0.2em 0; padding: 0; font-size: 120%;
+}
+.print h1 {
+    margin: 0; padding: 0; font-size: 190%; text-align: center;
+}
+/*nastaveni bunky s obrazkem*/
+.print img {
+    float: left; width: 169px;
+}
+.td-img {
+    width: 175px; text-align: center;
+}
+/*tabulka s podpisem*/
+.print table.print-table-footer {
+    width: 67%; margin-top: 0.5em; border: none;
+}
+.print table.print-table-footer-wide {
+    width: 100%; margin-top: 0.5em; border: none;
+}
+.print table.print-table-footer td,
+.print table.print-table-footer-wide td {
+    padding-bottom: 0.5em; border: none;
+}
+.footer-datum {
+    margin: 0 7px 0 7px; padding: 0 50px 0 50px; border-bottom: 1px dotted #000;
+}
+.footer-podpis {
+    padding: 0 80px 0 80px; border-bottom: 1px dotted #000; line-height: 190%;
+}
+.text-footer {
+    width: 100%; font-size: 80%;
+}
+/*bunka se zarovnanim na stred*/
+.print table td.td-center {
+    padding-top: 2em; text-align: center;
+}
+/*bunka s definovanou sirkou*/
+.print table.print-table-footer td.td-spacer {
+    width: 450px;
+}
+/*definice Ë·ry*/
+.print hr {
+    border: none; border-top: 3px solid black;
+}
+/*bunka s oddelovacem shora*/
+.print table .td-border {
+    border-top: 2px solid #000;
+}
+/*bunka s odsazenim ze stran*/
+.print table.print-table .td-padding {
+    padding-right: 25px; padding-left: 25px;
+}
+
+
+.print.centered {text-align: center;}
+.print.centered #logo {display: block; float: none; margin: 1em auto;}
+.print.centered table {margin: 1em auto;}
+
+p {
+    margin: 0 0 .5em;
+}
+ul, ol {
+    margin: 0 0 .5em 1.5em;
+    padding: 0;
+}
+li {
+    margin: 0;
+    padding: 0;
+}
+@media print {
+    .noprint {display: none;}
+}

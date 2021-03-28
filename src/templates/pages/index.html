@@ -1,20 +1,155 @@
 {% extends "./layout-default.html" %}
 
-{% set pageData = {
-	page_id: 'home',
-	template: 'index'
-} %}
+{% macro header(value, suffix) %}
+  <h2 class="c-graph__header">{{ value }}
+    <strong>{{ suffix }}</strong>
+  </h2>
+{% endmacro %}
 
-{% block content %}
+{% macro heading(value, range) %}
+  <h3 class="c-graph__heading">{{ value }}
+    <span>
+      {{ range }}</span></h3>
+  {% endmacro %}
 
-	<article class="o-main py-5" role="main">
-		<div class="container">
-			<h1 class="mb-4">{{ title_h1 | safe }}</h1>
-			{% if excerpt is defined and excerpt | length > 0 %}
-				<div class="lead mb-3">{{ excerpt | md | safe }}</div>
-			{% endif %}
-			{{ body | md | safe }}
-		</div>
-	</article>
+  {% macro canvas1() %}
+    <div class="c-graph__canvas">
+      <div class="c-graph__canvas-row l3">
+        <strong>OŘ</strong>
+      </div>
+      <div class="c-graph__canvas-row l2">
+        <strong>OM3</strong>
+      </div>
+      <div class="c-graph__canvas-row l2">
+        <strong>OM2</strong>
+      </div>
+      <div class="c-graph__canvas-row l2">
+        <strong>OM1</strong>
+      </div>
+      <div class="c-graph__canvas-row l0">
+        <strong>FP3</strong>
+      </div>
+      <div class="c-graph__canvas-row l0">
+        <strong>FP2</strong>
+      </div>
+      <div class="c-graph__canvas-row l0">
+        <strong>FP1</strong>
+      </div>
+    </div>
+  {% endmacro %}
 
-{% endblock %}
+  {% macro canvas2() %}
+    <div class="c-graph__canvas">
+      <div class="c-graph__canvas-row l3">
+        <strong>ZŘ</strong>
+      </div>
+      <div class="c-graph__canvas-row l3">
+        <strong>ŘŘ</strong>
+      </div>
+      <div class="c-graph__canvas-row l3">
+        <strong>OŘ</strong>
+      </div>
+      <div class="c-graph__canvas-row l2">
+        <strong>OM3</strong>
+      </div>
+
+    </div>
+  {% endmacro %}
+
+  {% macro dataset1() %}
+    <div class="c-graph__dataset">
+      <div class="progress">
+        <div class="progress-bar bg-grey" role="progressbar" data-title="550 bodů" style="height: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar bg-red" role="progressbar" data-title="400 bodů" style="height: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-red-light" role="progressbar" data-title="100 bodů" style="height: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+  {% endmacro %}
+
+  {% macro dataset2() %}
+    <div class="c-graph__dataset">
+      <div class="progress">
+        <div class="progress-bar bg-grey" role="progressbar" data-title="250 bodů" style="height: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar bg-red-light" role="progressbar" data-title="80 bodů" style="height: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+  {% endmacro %}
+
+  {% macro legend() %}
+    <div class="c-graph__legend">
+      <div class="c-graph__legend-item">
+        <span class="bg-grey"></span>odevzdané body sjednatelské (brutto)</div>
+      <div class="c-graph__legend-item">
+        <span class="bg-red"></span>odevzdané body sjednatelské (netto)</div>
+      <div class="c-graph__legend-item">
+        <span class="bg-red-light"></span>proplacené body pečovatelské (netto)</div>
+    </div>
+  {% endmacro %}
+
+  {% block content %}
+
+    <img style="margin: auto; display: block" src="./assets/images/image-1.png"/>
+
+    <div class="o-graph">
+      <div class="c-graph">
+        {{ header('Aktuální pozice','OM2')}}
+        <div class="c-graph__item w-25">
+          {{ heading('Aktuální kariéra', '1.10.2020–31.12.2020') }}
+          {{ canvas2() }}
+          {{ dataset1() }}
+        </div>
+        {{ legend() }}
+      </div>
+    </div>
+
+    <div class="o-graph">
+      <div class="c-graph">
+        {{ header('Aktuální pozice','OM2')}}
+        <div class="c-graph__item w-33">
+          {{ heading('Skupinová produkce', '1.10.2020–31.12.2020') }}
+          {{ canvas1() }}
+          {{ dataset1() }}
+        </div>
+        <div class="c-graph__item c-graph__item--dimm w-33">
+          {{ heading('Skupinová produkce', '1.10.2021–31.3.2021') }}
+          {{ canvas1() }}
+          {{ dataset2() }}
+        </div>
+        {{ legend() }}
+      </div>
+    </div>
+
+    <div class="o-graph">
+      <div class="c-graph">
+        {{ header('Aktuální pozice','OM2')}}
+        <div class="c-graph__item w-25">
+          {{ heading('Skupinová produkce', '1.10.2020–31.12.2020') }}
+          {{ canvas1() }}
+          {{ dataset1() }}
+        </div>
+        <div class="c-graph__item c-graph__item--dimm w-25">
+          {{ heading('Skupinová produkce', '1.10.2021–31.3.2021') }}
+          {{ canvas1() }}
+          {{ dataset2() }}
+        </div>
+        <div class="c-graph__item w-25">
+          {{ heading('Skupinová produkce', '1.10.2021–31.3.2021') }}
+          {{ canvas1() }}
+          {{ dataset1() }}
+        </div>
+        <div class="c-graph__item c-graph__item--dimm w-25">
+          {{ heading('Skupinová produkce', '1.10.2021–31.3.2021') }}
+          {{ canvas1() }}
+          {{ dataset2() }}
+        </div>
+        {{ legend()}}
+      </div>
+    </div>
+
+    <img style="margin: auto; display: block" src="./assets/images/image-2.png"/>
+
+  {% endblock %}

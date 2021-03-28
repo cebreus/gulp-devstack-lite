@@ -1,58 +1,213 @@
-@charset "utf-8";
-
-@import '../../node_modules/bootstrap/scss/functions';
-@import '../../node_modules/bootstrap/scss/mixins';
-@import './variables';
-@import './temp/assets/css/fonts';
-
-// Přetížení Bootatrapu
-// --------------
-
-// Set minimum reasonable width on very small devices
-body {
-  min-width: 320px;
+:root {
+  --primary: #ff5a49;
+  --primary-darken: #d8352d;
+  --grey: #666;
+  --grey-light: #39bd6e;
+  --red: #ff5a49;
+  --red-light: #d8352d;
 }
 
-// Remove viod in the bottom of the alert component
-.alert {
-  p:last-child,
-  ol:last-child,
-  ul:last-child {
-    margin-bottom: 0;
+// Utilities
+
+.bg-grey {
+  background-color: var(--grey);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.bg-red-light {
+  background-color: var(--red-light);
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-33 {
+  width: 33%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+// Objects
+
+.o-graph {
+  width: 759px;
+  padding: 10px 42px;
+  margin: auto;
+  background-image: url(../images/image-bg.png);
+  background-repeat: repeat-y;
+}
+
+// Component graph
+
+.c-graph {
+  --bs-gutter-x: 10px;
+  --bs-gutter-y: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) / -2);
+  margin-left: calc(var(--bs-gutter-x) / -2);
+
+  > div {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) / 2);
+    padding-left: calc(var(--bs-gutter-x) / 2);
+    margin-top: var(--bs-gutter-y);
   }
 }
 
-// Reset for SVG images in `<img src=""`
-img:not([src$='.svg']) {
-  max-width: 100%;
-  height: auto;
+.c-graph__header {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  margin-right: calc(var(--bs-gutter-x) / 2);
+  margin-left: calc(var(--bs-gutter-x) / 2);
+  color: #fff;
+  background-color: var(--primary);
+
+  strong {
+    letter-spacing: 0.01rem;
+  }
 }
 
-// Záhlaví webu
-// --------------
+.c-graph__heading {
+  padding: 0.25rem 0.5rem;
+  line-height: 1.3;
+  background-color: #ccc;
 
-.o-header {
-  color: theme-color('light');
-  background-color: map-get($colors, 'gray-dark');
+  span {
+    display: block;
+    font-weight: normal;
+  }
 }
 
-// Hlavní obsah
-// --------------
+.c-graph__item {
+  --label-width: 3rem;
 
-.o-main {
-  background-color: theme-color('light');
+  position: relative;
+  cursor: default;
+
+  &--dimm {
+    opacity: 0.5;
+  }
 }
 
-// Zápatí webu
-// --------------
+.c-graph__canvas-row {
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  border-bottom: dotted #ccc 1px;
 
-.o-footer {
-  padding-top: map-get($spacers, 5);
-  padding-bottom: map-get($spacers, 3);
-  color: map-get($grays, '600');
+  &:last-of-type,
+  &:nth-of-type(1),
+  &:nth-of-type(4) {
+    border-bottom-style: solid;
+  }
+
+  strong {
+    display: block;
+    width: var(--label-width);
+  }
+
+  &.l2 {
+    border-bottom-color: #ccc;
+
+    strong {
+      background-color: #ececec;
+    }
+  }
+
+  &.l3 strong {
+    background-color: var(--primary);
+  }
 }
 
-// Importy komponent
-// --------------
+.c-graph__dataset {
+  --dataset-gap: 0.25rem;
 
-@import 'c-article';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: var(--label-width);
+  display: flex;
+  padding: 0 calc(var(--dataset-gap) * 2);
+}
+
+.c-graph__legend {
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.c-graph__legend-item {
+  display: inline-block;
+  margin-right: 1rem;
+
+  span {
+    display: inline-block;
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-right: 0.25rem;
+    vertical-align: middle;
+  }
+}
+
+.progress {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  width: 50%;
+  height: 100%;
+  padding: 0 var(--dataset-gap);
+  font-size: 0.75rem;
+}
+
+.progress-bar {
+  position: relative;
+  display: flex;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+  transition: width 0.6s ease, opacity 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 90, 73, 0.5);
+  }
+
+  &[data-title]:hover {
+    &::before {
+      content: attr(data-title);
+      position: absolute;
+      bottom: calc(100% + 0.15rem);
+      left: 0.25rem;
+      z-index: 10;
+      padding: 0.25rem 0.35rem 0.15rem;
+      font-weight: bold;
+      line-height: 1;
+      border-radius: 0.15rem 0.15rem 0.15rem 0;
+      background-color: var(--primary);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: calc(100% - 0.25rem);
+      left: 0.25rem;
+      z-index: 10;
+      display: block;
+      width: 0;
+      height: 0;
+      border-width: 0.5rem 0.5rem 0 0;
+      border-style: solid;
+      border-color: var(--primary) transparent transparent transparent;
+    }
+  }
+}
